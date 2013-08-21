@@ -111,4 +111,17 @@ describe('REST API', function() {
         done();
       });
   });
+
+  it('should be able to delete an email', function(done) {
+    var Email = models.email;
+    q(Email.find({ where: { subject: 'Subject 42' } }))
+    .then(function (email) {
+      request.del('http://localhost:' + port + '/email/' + email.id, { json: true },
+        function (err, res, body) {
+          if (err) return done(err);
+          expect(body).to.deep.equals({ msg: 'Item successfully deleted' });
+          done();
+        });
+    });
+  });
 });
