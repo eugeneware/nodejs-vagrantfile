@@ -7,6 +7,7 @@ var expect = require('chai').expect,
     models = require('../app/config/models')(db),
     bl = require('bl'),
     q = require('q'),
+    request = require('request'),
     range = require('range').range;
 
 describe('REST API', function() {
@@ -67,16 +68,15 @@ describe('REST API', function() {
     var Email = models.email;
     q(Email.find({ where: { subject: 'Subject 42' } }))
     .then(function (email) {
-      http.get('http://localhost:' + port + '/email/' + email.id, function (res) {
-        res.pipe(bl(function (err, data) {
-          var obj = JSON.parse(data);
+      request('http://localhost:' + port + '/email/' + email.id,
+        function (err, res, body) {
+          if (err) return done(err);
+          var obj = JSON.parse(body);
           expect(obj.subject).to.equal('Subject 42');
           expect(obj.message).to.equal('Email message 42');
           expect(obj.id).to.equal(email.id);
           done();
-        }));
-      })
-      .on('error', done);
+        });
     });
   });
 });
