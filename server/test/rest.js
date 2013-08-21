@@ -2,18 +2,47 @@ var expect = require('chai').expect,
     path = require('path'),
     spawn = require('child_process').spawn,
     http = require('http'),
-    bl = require('bl');
+    config = require('../app/config/config'),
+    db = require('../app/config/db')(config),
+    models = require('../app/config/models')(db),
+    bl = require('bl'),
+    q = require('q'),
+    range = require('range').range;
 
-var port = 3001;
 describe('REST API', function() {
   var app;
+  var port = 3001;
+
+  function testData(n) {
+    n = n || 100;
+    return range(0, n).map(function (i) {
+      return {
+        subject: 'Subject ' + i,
+        message: 'Email message ' + i
+      };
+    });
+  }
 
   beforeEach(function(done) {
-    app = spawn('node', [path.join(__dirname, '..', 'app', 'app.js'), port]);
-    //app.stdout.pipe(process.stdout);
-    //app.stderr.pipe(process.stderr);
-    app.stdout.once('data', function () {
-      done();
+    var Email = models.email;
+    q(db.sync())
+    .then(function () {
+      return db.query('TRUNCATE TABLE "Emails"');
+    })
+    .then(function () {
+      return Email.bulkCreate(testData());
+    })
+    .then(function () {
+      app = spawn('node', [path.join(__dirname, '..', 'app', 'app.js'), port]);
+      //app.stdout.pipe(process.stdout);
+      //app.stderr.pipe(process.stderr);
+      app.stdout.once('data', function () {
+        done();
+      });
+    })
+    .fail(function (err) {
+      console.log(err);
+      done(err);
     });
   });
 
@@ -32,5 +61,22 @@ describe('REST API', function() {
       }));
     })
     .on('error', done);
+  });
+
+  it('should be able to retrieve an email', function(done) {
+    var Email = models.email;
+    q(Email.find({ where: { subject: 'Subject 42' } }))
+    .then(function (email) {
+      http.get('http://localhost:' + port + '/email/' + email.id, function (res) {
+        res.pipe(bl(function (err, data) {
+          var obj = JSON.parse(data);
+          expect(obj.subject).to.equal('Subject 42');
+          expect(obj.message).to.equal('Email message 42');
+          expect(obj.id).to.equal(email.id);
+          done();
+        }));
+      })
+      .on('error', done);
+    });
   });
 });
