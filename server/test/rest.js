@@ -79,4 +79,23 @@ describe('REST API', function() {
         });
     });
   });
+
+  it('should be able to create a new email', function(done) {
+    request.post({
+        url: 'http://localhost:' + port + '/email/',
+        body: {
+          subject: 'New subject',
+          message: 'New message'
+        },
+        json: true
+      },
+      function (err, res, body) {
+        if (err) return done(err);
+        expect(res.statusCode).to.equal(200);
+        expect(body.subject).to.equal('New subject');
+        expect(body.message).to.equal('New message');
+        expect(body.id).to.be.gt(0);
+        done();
+      });
+  });
 });
