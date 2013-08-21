@@ -124,4 +124,32 @@ describe('REST API', function() {
         });
     });
   });
+
+  it('should be able to update an email', function(done) {
+    var Email = models.email;
+    q(Email.find({ where: { subject: 'Subject 42' } }))
+    .then(function (email) {
+      request.put('http://localhost:' + port + '/email/' + email.id, {
+          body: {
+            subject: 'Changed Subject 42'
+          },
+          json: true
+        },
+        function (err, res, body) {
+          if (err) return done(err);
+          expect(body.subject).to.equal('Changed Subject 42');
+          expect(body.message).to.equal('Email message 42');
+          expect(body.id).to.equal(email.id);
+
+          Email.find(email.id)
+            .success(function (_email) {
+              expect(_email.subject).to.equal('Changed Subject 42');
+              expect(_email.message).to.equal('Email message 42');
+              expect(_email.id).to.equal(email.id);
+              done();
+            })
+            .failure(done);
+        });
+    });
+  });
 });
