@@ -12,11 +12,10 @@ module.exports = function(app, models) {
     if (match) {
       var model = match[1];
       var resourceFile = resourcesPath + '/' + model + '.js';
-      if (fs.exists(resourceFile)) {
-        app.resource(model, require(resourceFile)(models, model));
-      } else {
-        app.resource(model, require(resourcesPath + '/crud')(models, model));
+      if (!fs.exists(resourceFile)) {
+        resourceFile = resourcesPath + '/crud';
       }
+      app.resource(model, require(resourceFile)(models, model));
     }
   });
 };
