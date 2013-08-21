@@ -3,7 +3,7 @@ module.exports = {
   app: {
     name: 'emailsamurai-server'
   },
-  port: 3000,
+  port: parseInt(process.env.PORT || process.argv[2] || 3000, 10),
   db: {
     name: 'testdb',
     user: 'testuser',

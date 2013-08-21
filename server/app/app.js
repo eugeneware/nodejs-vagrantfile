@@ -9,3 +9,4 @@ require('./config/express')(app, config);
 require('./config/resources')(app, models);
 
 app.listen(config.port);
+console.log('Listening on port ' + config.port);
