@@ -11,7 +11,5 @@ module.exports = function(db) {
     }
   });
 
-  db.sync();
-
   return models;
 };
