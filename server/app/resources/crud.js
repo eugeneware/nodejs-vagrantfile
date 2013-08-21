@@ -1,37 +1,31 @@
-module.exports = function(models) {
-  var Email = models.email;
+module.exports = function(models, model) {
+  var Model = models[model];
   return {
     index: function(req, res) {
-      Email.findAll()
-        .success(function (emails) {
-          res.json(emails);
+      Model.findAll()
+        .success(function (items) {
+          res.json(items);
         })
         .failure(function (err) {
           res.json(500, { error: err.toString() });
         });
     },
-    new: function(req, res) {
-      res.send('email new');
-    },
     create: function(req, res) {
-      Email.create(req.body)
-        .success(function (email) {
-          res.json(email);
+      Model.create(req.body)
+        .success(function (item) {
+          res.json(item);
         })
         .failure(function (err) {
           res.json(500, { error: err.toString() });
         });
     },
     show: function(req, res) {
-      res.json(req.email);
-    },
-    edit: function(req, res) {
-      res.send('email edit');
+      res.json(req[model]);
     },
     update: function(req, res) {
-      req.email.updateAttributes(req.body)
+      req[model].updateAttributes(req.body)
         .success(function () {
-          res.json(req.email);
+          res.json(req[model]);
         })
         .failure(function (err) {
           res.json(500, { error: err.toString() });
@@ -39,7 +33,7 @@ module.exports = function(models) {
     },
     destroy: function(req, res) {
       console.log('destroy?');
-      req.email.destroy()
+      req[model].destroy()
         .success(function () {
           res.json({ msg: 'Item successfully deleted' });
         })
@@ -48,9 +42,9 @@ module.exports = function(models) {
         });
     },
     load: function (id, cb) {
-      Email.find(id)
-        .success(function (email) {
-          cb(null, email);
+      Model.find(id)
+        .success(function (item) {
+          cb(null, item);
         })
         .failure(function (err) {
           cb(err);
