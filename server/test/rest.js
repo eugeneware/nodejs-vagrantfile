@@ -68,13 +68,12 @@ describe('REST API', function() {
     var Email = models.email;
     q(Email.find({ where: { subject: 'Subject 42' } }))
     .then(function (email) {
-      request('http://localhost:' + port + '/email/' + email.id,
+      request('http://localhost:' + port + '/email/' + email.id, { json: true },
         function (err, res, body) {
           if (err) return done(err);
-          var obj = JSON.parse(body);
-          expect(obj.subject).to.equal('Subject 42');
-          expect(obj.message).to.equal('Email message 42');
-          expect(obj.id).to.equal(email.id);
+          expect(body.subject).to.equal('Subject 42');
+          expect(body.message).to.equal('Email message 42');
+          expect(body.id).to.equal(email.id);
           done();
         });
     });
