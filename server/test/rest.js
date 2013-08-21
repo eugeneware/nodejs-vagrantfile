@@ -98,4 +98,18 @@ describe('REST API', function() {
         done();
       });
   });
+
+  it('should be able to get a list of emails', function(done) {
+    request('http://localhost:' + port + '/email', { json: true },
+      function (err, res, body) {
+        if (err) return done(err);
+        expect(body.length).to.equal(100);
+        body.forEach(function (email) {
+          expect(email.subject).to.match(/^Subject [0-9]+$/);
+          expect(email.message).to.match(/^Email message [0-9]+$/);
+          expect(email.id).to.be.gte(0);
+        });
+        done();
+      });
+  });
 });
