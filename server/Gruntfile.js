@@ -1,6 +1,19 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    exec: {
+      mkdata: { cmd: 'mkdir -p ./data' },
+      initdb: { cmd: 'initdb ./data' },
+      startdb: { cmd: 'pg_ctl -D ./data -l ./data/logfile start' },
+      createdb: { cmd: 'createdb testdb' },
+      setupdb: {
+        cmd:
+          ['echo "CREATE USER testuser WITH PASSWORD \'testpassword\'; ',
+           'GRANT ALL PRIVILEGES ON DATABASE testdb TO testuser;" ',
+           '| psql testdb'].join('')
+      },
+      stopdb: { cmd: 'pg_ctl -D ./data -l ./data/logfile stop' }
+    },
     develop: {
       server: {
         file: 'app/app.js'
@@ -45,6 +58,7 @@ module.exports = function (grunt) {
     }
   });
 
+  grunt.loadNpmTasks('grunt-exec');
   grunt.loadNpmTasks('grunt-develop');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -53,4 +67,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['develop', 'complexity', 'jshint', 'mochacli']);
   grunt.registerTask('default', ['test', 'watch']);
+  grunt.registerTask('initdb', ['exec']);
+  grunt.registerTask('startdb', ['exec:startdb']);
+  grunt.registerTask('stopdb', ['exec:stopdb']);
 };
