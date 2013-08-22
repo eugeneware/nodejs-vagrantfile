@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -12,13 +10,18 @@ module.exports = function (grunt) {
       generic: {
         src: ['app/**/*.js'],
         options: {
-          errorsOnly: true
+          errorsOnly: false,
+          cyclometric: 6,       // default is 3
+          halstead: 16,         // default is 8
+          maintainability: 100  // default is 100
         }
       }
     },
     jshint: {
       all: [
+        'Gruntfile.js',
         'app/**/*.js',
+        'test/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc'
@@ -32,10 +35,6 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      grunt: {
-        files: ['Gruntfile.js'],
-        tasks: ['default']
-      },
       js: {
         files: ['app/**/*.js'],
         tasks: ['default'],
