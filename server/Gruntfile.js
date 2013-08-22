@@ -1,10 +1,6 @@
 'use strict';
 
-var request = require('request');
-
 module.exports = function (grunt) {
-  var reloadPort = 35729, files;
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     develop: {
@@ -14,41 +10,48 @@ module.exports = function (grunt) {
     },
     complexity: {
       generic: {
-        src: ['app/**/*.js']
+        src: ['app/**/*.js'],
+        options: {
+          errorsOnly: true
+        }
       }
     },
-    mochaTest: {
-      test: {
-        src: ['test/**/*.js']
+    jshint: {
+      all: [
+        'app/**/*.js',
+      ],
+      options: {
+        jshintrc: '.jshintrc'
+      }
+    },
+    mochacli: {
+      all: ['test/**/*.js'],
+      options: {
+        reporter: 'spec',
+        ui: 'tdd'
       }
     },
     watch: {
-      options: {
-        // nospawn: true
-      },
-      server: {
-        files: ['app/**/*.js'],
-        tasks: ['develop']
-      },
-      mochaTest: {
-        files: ['test/**/*.js'],
-        tasks: ['mochaTest']
+      grunt: {
+        files: ['Gruntfile.js'],
+        tasks: ['default']
       },
       js: {
-        files: ['app/**/*.js']
+        files: ['app/**/*.js'],
+        tasks: ['default'],
+        options: {
+          nospawn: true,
+        }
       }
     }
   });
 
-  grunt.config.requires('watch.server.files');
-  files = grunt.config('watch.server.files');
-  files = grunt.file.expand(files);
-
   grunt.loadNpmTasks('grunt-develop');
   grunt.loadNpmTasks('grunt-complexity');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-mocha-cli');
 
-  grunt.registerTask('default', ['develop', 'mochaTest', 'complexity', 'watch']);
-  grunt.registerTask('mocha', ['mochaTest', 'watch']);
+  grunt.registerTask('test', ['develop', 'complexity', 'jshint', 'mochacli']);
+  grunt.registerTask('default', ['test', 'watch']);
 };

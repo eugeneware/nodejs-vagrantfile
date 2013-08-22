@@ -3,5 +3,5 @@ module.exports = function(models) {
     index: function(req, res) {
       res.send('main index');
     }
-  }
+  };
 };

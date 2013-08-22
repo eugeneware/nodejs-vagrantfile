@@ -1,7 +1,7 @@
 module.exports = function(db) {
-  var fs = require('fs')
-    , modelsPath = __dirname + '/../models'
-    , models = {};
+  var fs = require('fs'),
+      modelsPath = __dirname + '/../models',
+      models = {};
 
   // models
   fs.readdirSync(modelsPath).forEach(function(file) {

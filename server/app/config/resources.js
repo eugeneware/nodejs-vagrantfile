@@ -1,7 +1,7 @@
 module.exports = function(app, models) {
-  var fs = require('fs')
-    , resourcesPath = __dirname + '/../resources'
-    , modelsPath = __dirname + '/../models'
+  var fs = require('fs'),
+      resourcesPath = __dirname + '/../resources',
+      modelsPath = __dirname + '/../models';
 
   // main resource
   app.resource(require(resourcesPath + '/main')(models));
