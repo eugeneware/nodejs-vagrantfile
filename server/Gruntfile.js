@@ -17,13 +17,22 @@ module.exports = function (grunt) {
         src: ['app/**/*.js']
       }
     },
+    mochaTest: {
+      test: {
+        src: ['test/**/*.js']
+      }
+    },
     watch: {
       options: {
-        nospawn: true
+        // nospawn: true
       },
       server: {
         files: ['app/**/*.js'],
         tasks: ['develop']
+      },
+      mochaTest: {
+        files: ['test/**/*.js'],
+        tasks: ['mochaTest']
       },
       js: {
         files: ['app/**/*.js']
@@ -38,6 +47,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-develop');
   grunt.loadNpmTasks('grunt-complexity');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-mocha-test');
 
-  grunt.registerTask('default', ['develop', 'complexity', 'watch']);
+  grunt.registerTask('default', ['develop', 'mochaTest', 'complexity', 'watch']);
+  grunt.registerTask('mocha', ['mochaTest', 'watch']);
 };

@@ -1,15 +1,21 @@
 module.exports = function(app, models) {
   var fs = require('fs')
     , resourcesPath = __dirname + '/../resources'
+    , modelsPath = __dirname + '/../models'
 
   // main resource
   app.resource(require(resourcesPath + '/main')(models));
 
   // load all other resources
-  fs.readdirSync(resourcesPath).forEach(function(file) {
+  fs.readdirSync(modelsPath).forEach(function(file) {
     var match = file.match(/(.*)\.js$/);
-    if (match && match[1] !== 'main') {
-      app.resource(match[1], require(resourcesPath + '/' + match[1])(models));
+    if (match) {
+      var model = match[1];
+      var resourceFile = resourcesPath + '/' + model + '.js';
+      if (!fs.exists(resourceFile)) {
+        resourceFile = resourcesPath + '/crud';
+      }
+      app.resource(model, require(resourceFile)(models, model));
     }
   });
 };

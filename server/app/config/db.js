@@ -3,7 +3,8 @@ module.exports = function(config) {
 
   var db = new Sequelize(config.db.name, config.db.user, config.db.pass, {
     dialect: 'postgres',
-    port: 5432
+    port: 5432,
+    logging: false
   });
 
   return db;
