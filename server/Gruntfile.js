@@ -2,17 +2,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     exec: {
-      mkdata: { cmd: 'mkdir -p /tmp/data' },
-      initdb: { cmd: 'initdb /tmp/data' },
-      startdb: { cmd: 'pg_ctl -D /tmp/data -l /tmp/data/logfile start' },
-      createdb: { cmd: 'createdb testdb' },
-      setupdb: {
-        cmd:
-          ['echo "CREATE USER testuser WITH PASSWORD \'testpassword\'; ',
-           'GRANT ALL PRIVILEGES ON DATABASE testdb TO testuser;" ',
-           '| psql testdb'].join('')
-      },
-      stopdb: { cmd: 'pg_ctl -D /tmp/data -l /tmp/data/logfile stop' }
+      initdb: { cmd: 'sh ../bin/initdb.sh -d /tmp/test_server' },
+      startdb: { cmd: 'sh ../bin/startdb.sh -d /tmp/test_server' },
+      stopdb: { cmd: 'sh ../bin/stopdb.sh -d /tmp/test_server' }
     },
     develop: {
       server: {
@@ -65,9 +57,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-cli');
 
-  grunt.registerTask('test', ['develop', 'complexity', 'jshint', 'mochacli']);
+  grunt.registerTask('test', ['startdb', 'develop', 'complexity', 'jshint', 'mochacli']);
   grunt.registerTask('default', ['test', 'watch']);
-  grunt.registerTask('initdb', ['exec']);
+  grunt.registerTask('initdb', ['exec:initdb']);
   grunt.registerTask('startdb', ['exec:startdb']);
   grunt.registerTask('stopdb', ['exec:stopdb']);
 };
