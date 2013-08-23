@@ -2,9 +2,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     exec: {
-      mkdata: { cmd: 'mkdir -p ./data' },
-      initdb: { cmd: 'initdb ./data' },
-      startdb: { cmd: 'pg_ctl -D ./data -l ./data/logfile start' },
+      mkdata: { cmd: 'mkdir -p /tmp/data' },
+      initdb: { cmd: 'initdb /tmp/data' },
+      startdb: { cmd: 'pg_ctl -D /tmp/data -l /tmp/data/logfile start' },
       createdb: { cmd: 'createdb testdb' },
       setupdb: {
         cmd:
@@ -12,7 +12,7 @@ module.exports = function (grunt) {
            'GRANT ALL PRIVILEGES ON DATABASE testdb TO testuser;" ',
            '| psql testdb'].join('')
       },
-      stopdb: { cmd: 'pg_ctl -D ./data -l ./data/logfile stop' }
+      stopdb: { cmd: 'pg_ctl -D /tmp/data -l /tmp/data/logfile stop' }
     },
     develop: {
       server: {

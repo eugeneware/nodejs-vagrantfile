@@ -8,7 +8,7 @@ DEV_DOMAIN = ENV["DEV_DOMAIN"] || "devbox"
 DEV_IP = ENV["DEV_IP"] || "10.10.10.10"
 
 Vagrant::configure("2") do |config|
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "bin/bootstrap.sh"
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.hostname = "#{DEV_DOMAIN}"
   config.vm.network :private_network, ip: DEV_IP
