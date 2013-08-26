@@ -120,7 +120,7 @@ module.exports = function (grunt) {
       },
       server: {
         files: {
-          '<%= yeoman.app %>/styles/main.css': '<%= yeoman.app %>/styles/main.less'
+          '.tmp/styles/main.css': '<%= yeoman.app %>/styles/main.less'
         }
       }
     },
