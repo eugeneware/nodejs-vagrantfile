@@ -17,6 +17,7 @@ Vagrant::configure("2") do |config|
     config.vm.box = BOX_NAME
     config.vm.box_url = BOX_URI
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
   config.vm.provider :vmware_fusion do |f, override|
@@ -24,5 +25,6 @@ Vagrant::configure("2") do |config|
     override.vm.box_url = VF_BOX_URI
     config.vm.network :public_network
     f.vmx["displayName"] = "devbox"
+    f.vmx["memsize"] = "1024"
   end
 end
