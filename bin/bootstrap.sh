@@ -21,7 +21,7 @@ if [ ! -e /.installed ]; then
 fi
 
 #-----------------------------------------------------------------------------
-# Headless Chrome
+# Headless Browsers
 #-----------------------------------------------------------------------------
 
 if [ ! -e /.installed ]; then
@@ -33,9 +33,9 @@ if [ ! -e /.installed ]; then
 
   # update and install
   apt-get update
-  apt-get install -y openjdk-7-jre google-chrome-stable xvfb unzip
+  apt-get install -y openjdk-7-jre google-chrome-stable firefox xvfb unzip
 
-  # download and copy chromedriver to /usr/local/bin
+  # download / copy selenium and chromedriver to /usr/local/bin
   cd /tmp
   wget 'https://chromedriver.googlecode.com/files/chromedriver_linux64_2.2.zip'
   wget 'https://selenium.googlecode.com/files/selenium-server-standalone-2.35.0.jar'

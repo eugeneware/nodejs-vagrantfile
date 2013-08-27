@@ -33,6 +33,14 @@ module.exports = function (grunt) {
         files: ['<%= yeoman.app %>/styles/{,*/}*.less'],
         tasks: ['less:server']
       },
+      karma: {
+        files: [
+          '<%= yeoman.app %>/{,*/}*.html',
+          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
+          'test/spec/{,*/}*.js'
+        ],
+        tasks: ['karma:unit:run']
+      },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
@@ -233,7 +241,7 @@ module.exports = function (grunt) {
         'less:server'
       ],
       test: [
-        'less:server'
+        'less:server',
       ],
       dist: [
         'less:dist',
@@ -245,7 +253,7 @@ module.exports = function (grunt) {
     karma: {
       unit: {
         configFile: 'karma.conf.js',
-        singleRun: true
+        background: true
       }
     },
     cdnify: {
@@ -291,7 +299,8 @@ module.exports = function (grunt) {
     'clean:server',
     'concurrent:test',
     'connect:test',
-    'karma'
+    'karma:unit',
+    'watch'
   ]);
 
   grunt.registerTask('build', [
