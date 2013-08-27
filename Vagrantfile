@@ -9,22 +9,23 @@ DEV_IP = ENV["DEV_IP"] || "10.10.10.10"
 
 Vagrant::configure("2") do |config|
   config.vm.provision :shell, :path => "bin/bootstrap.sh"
-  config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.hostname = "#{DEV_DOMAIN}"
   config.vm.network :private_network, ip: DEV_IP
+  config.vm.network :forwarded_port, guest: 80, host: 8080
   
   config.vm.provider :virtualbox do |vb|
     config.vm.box = BOX_NAME
     config.vm.box_url = BOX_URI
+    vb.customize ["modifyvm", :id, "--cpus", 2]
+    vb.customize ["modifyvm", :id, "--memory", 2048]
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--memory", 1024]
   end
 
   config.vm.provider :vmware_fusion do |f, override|
     override.vm.box = BOX_NAME
     override.vm.box_url = VF_BOX_URI
-    config.vm.network :public_network
+    f.vmx["numcpus"] = 2
+    f.vmx["memsize"] = 2048
     f.vmx["displayName"] = "devbox"
-    f.vmx["memsize"] = "1024"
   end
 end
