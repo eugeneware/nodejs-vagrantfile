@@ -41,10 +41,10 @@ module.exports = function (grunt) {
     },
     watch: {
       js: {
-        files: ['app/**/*.js'],
+        files: ['app/**/*.js', 'test/**/*.js'],
         tasks: ['default'],
         options: {
-          nospawn: true,
+          nospawn: true
         }
       }
     }
