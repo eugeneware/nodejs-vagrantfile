@@ -23,8 +23,7 @@
     "grunt-rev": "~0.1.0",
     "grunt-svgmin": "~0.2.0",
     "grunt-usemin": "~0.1.11",
-    "karma-chai": "0.0.1",
-    "karma-ievms": "0.0.3",
+    "karma-expect": "~0.1.0",
     "karma-mocha": "~0.1.0",
     "matchdep": "~0.1.2",
     "mocha": "~1.12.0"
