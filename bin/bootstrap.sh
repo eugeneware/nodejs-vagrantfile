@@ -76,7 +76,12 @@ if [ ! -e /.installed ]; then
   done
 
   # change permissions so that users other than postgres can start a db
+  mkdir -p /var/run/postgresql/
   chmod 777 /var/run/postgresql/
+
+  # stop and disable the system wide instance of postgresql
+  service postgresql stop
+  sudo update-rc.d postgresql disable
 
   # Note: initdb will not be able to create a db in the /vagrant directory.  All
   # dbs will need to be created elsewhere.
