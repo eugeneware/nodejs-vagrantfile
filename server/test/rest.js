@@ -1,4 +1,4 @@
-var expect = require('chai').expect,
+var expect = require('expect.js'),
     path = require('path'),
     spawn = require('child_process').spawn,
     http = require('http'),
@@ -93,7 +93,7 @@ describe('REST API', function() {
         expect(res.statusCode).to.equal(200);
         expect(body.subject).to.equal('New subject');
         expect(body.message).to.equal('New message');
-        expect(body.id).to.be.gt(0);
+        expect(body.id).to.be.greaterThan(0);
         done();
       });
   });
@@ -106,7 +106,7 @@ describe('REST API', function() {
         body.forEach(function (email) {
           expect(email.subject).to.match(/^Subject [0-9]+$/);
           expect(email.message).to.match(/^Email message [0-9]+$/);
-          expect(email.id).to.be.gte(0);
+          expect(email.id).to.be.greaterThan(0);
         });
         done();
       });
@@ -119,7 +119,7 @@ describe('REST API', function() {
       request.del('http://localhost:' + port + '/email/' + email.id, { json: true },
         function (err, res, body) {
           if (err) return done(err);
-          expect(body).to.deep.equals({ msg: 'Item successfully deleted' });
+          expect(body.msg).to.equal('Item successfully deleted');
           done();
         });
     });

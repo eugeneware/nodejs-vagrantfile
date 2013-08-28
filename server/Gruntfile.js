@@ -57,8 +57,8 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-mocha-cli');
 
-  grunt.registerTask('test', ['startdb', 'develop', 'complexity', 'jshint', 'mochacli']);
-  grunt.registerTask('default', ['test', 'watch']);
+  grunt.registerTask('test', ['startdb', 'develop', 'complexity', 'jshint', 'mochacli', 'watch']);
+  grunt.registerTask('default', ['test']);
   grunt.registerTask('initdb', ['exec:initdb']);
   grunt.registerTask('startdb', ['exec:startdb']);
   grunt.registerTask('stopdb', ['exec:stopdb']);
