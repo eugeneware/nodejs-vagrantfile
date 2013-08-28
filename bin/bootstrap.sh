@@ -43,6 +43,9 @@ if [ ! -e /.installed ]; then
   mv chromedriver /usr/local/bin
   mv selenium-server-standalone-2.35.0.jar /usr/local/bin
 
+  # phantomjs
+  su vagrant -l -c "npm install -g phantomjs"
+
   # xvfb init script
   cp /vagrant/etc/init/xvfb.conf /etc/init
   service xvfb start
