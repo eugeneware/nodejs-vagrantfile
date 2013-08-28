@@ -34,6 +34,9 @@ module.exports = function (grunt) {
         tasks: ['less:server']
       },
       karma: {
+        options: {
+          interupt: true
+        },
         files: [
           '<%= yeoman.app %>/{,*/}*.html',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
@@ -50,7 +53,8 @@ module.exports = function (grunt) {
           '{.tmp,<%= yeoman.app %>}/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
+        ],
+        tasks: ['karma:unit:run']
       }
     },
     connect: {
@@ -300,7 +304,7 @@ module.exports = function (grunt) {
     'concurrent:test',
     'connect:test',
     'karma:unit',
-    'watch'
+    'watch:karma'
   ]);
 
   grunt.registerTask('build', [
