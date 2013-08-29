@@ -55,6 +55,10 @@ module.exports = function (grunt) {
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ],
         tasks: ['karma:unit:run']
+      },
+      browserify: {
+        files: ['!<%= yeoman.app %>/scripts/bundle.js', '<%= yeoman.app %>/scripts/**/*.js'],
+        tasks: ['browserify']
       }
     },
     connect: {
@@ -258,6 +262,21 @@ module.exports = function (grunt) {
       unit: {
         configFile: 'karma.conf.js',
         background: true
+      }
+    },
+    browserify: {
+      basic: {
+        src: ['<%= yeoman.app %>/scripts/app.js'],
+        dest: '<%= yeoman.app %>/scripts/bundle.js',
+        options: {
+          transform: ['debowerify'],
+          shim: {
+            angularjs: {
+              path: '<%= yeoman.app %>/bower_components/angular/angular.js',
+              exports: 'angular'
+            }
+          }
+        }
       }
     },
     cdnify: {

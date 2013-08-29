@@ -2156,7 +2156,8 @@ angular.module('ngSanitize').filter('linky', function() {
 
 })(window, window.angular);
 
-},{}],5:[function(require,module,exports){
+},{}],"ffc3O6":[function(require,module,exports){
+var global=self;(function browserifyShim(module, exports, define, browserify_shim__define__module__export__) {
 /**
  * @license AngularJS v1.2.0rc1
  * (c) 2010-2012 Google, Inc. http://angularjs.org
@@ -20059,6 +20060,10 @@ var styleDirective = valueFn({
 
 })(window, document);
 angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');
+; browserify_shim__define__module__export__(typeof angular != "undefined" ? angular : window.angular);
+
+}).call(global, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
+
 },{}],6:[function(require,module,exports){
 /* ==========================================================
  * bootstrap-affix.js v2.3.2
@@ -21295,7 +21300,9 @@ angular.element(document).find('head').prepend('<style type="text/css">@charset 
 
 }(window.jQuery);
 
-},{}],14:[function(require,module,exports){
+},{}],"angularjs":[function(require,module,exports){
+module.exports=require('ffc3O6');
+},{}],15:[function(require,module,exports){
 /* =============================================================
  * bootstrap-scrollspy.js v2.3.2
  * http://twitter.github.com/bootstrap/javascript.html#scrollspy
@@ -21458,7 +21465,7 @@ angular.element(document).find('head').prepend('<style type="text/css">@charset 
   })
 
 }(window.jQuery);
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 /* ========================================================
  * bootstrap-tab.js v2.3.2
  * http://twitter.github.com/bootstrap/javascript.html#tabs
@@ -21603,8 +21610,6 @@ angular.element(document).find('head').prepend('<style type="text/css">@charset 
   })
 
 }(window.jQuery);
-},{}],"angularjs":[function(require,module,exports){
-module.exports=require('2CMExG');
 },{}],17:[function(require,module,exports){
 /* ===========================================================
  * bootstrap-tooltip.js v2.3.2
@@ -31993,7 +31998,7 @@ require('./routes');
 // Require Controllers here
 require('./controllers/main');
 
-},{"../bower_components/bootstrap-less/js/bootstrap-affix":6,"../bower_components/bootstrap-less/js/bootstrap-alert":7,"../bower_components/bootstrap-less/js/bootstrap-button":8,"../bower_components/bootstrap-less/js/bootstrap-carousel":9,"../bower_components/bootstrap-less/js/bootstrap-collapse":10,"../bower_components/bootstrap-less/js/bootstrap-dropdown":11,"../bower_components/bootstrap-less/js/bootstrap-modal":12,"../bower_components/bootstrap-less/js/bootstrap-popover":13,"../bower_components/bootstrap-less/js/bootstrap-scrollspy":14,"../bower_components/bootstrap-less/js/bootstrap-tab":15,"../bower_components/bootstrap-less/js/bootstrap-tooltip":17,"../bower_components/bootstrap-less/js/bootstrap-transition":18,"../bower_components/bootstrap-less/js/bootstrap-typeahead":19,"./../bower_components/angular-cookies/angular-cookies.js":1,"./../bower_components/angular-resource/angular-resource.js":2,"./../bower_components/angular-route/angular-route.js":3,"./../bower_components/angular-sanitize/angular-sanitize.js":4,"./../bower_components/jquery/jquery.js":20,"./controllers/main":22,"./routes":23,"angularjs":"2CMExG"}],22:[function(require,module,exports){
+},{"../bower_components/bootstrap-less/js/bootstrap-affix":6,"../bower_components/bootstrap-less/js/bootstrap-alert":7,"../bower_components/bootstrap-less/js/bootstrap-button":8,"../bower_components/bootstrap-less/js/bootstrap-carousel":9,"../bower_components/bootstrap-less/js/bootstrap-collapse":10,"../bower_components/bootstrap-less/js/bootstrap-dropdown":11,"../bower_components/bootstrap-less/js/bootstrap-modal":12,"../bower_components/bootstrap-less/js/bootstrap-popover":13,"../bower_components/bootstrap-less/js/bootstrap-scrollspy":15,"../bower_components/bootstrap-less/js/bootstrap-tab":16,"../bower_components/bootstrap-less/js/bootstrap-tooltip":17,"../bower_components/bootstrap-less/js/bootstrap-transition":18,"../bower_components/bootstrap-less/js/bootstrap-typeahead":19,"./../bower_components/angular-cookies/angular-cookies.js":1,"./../bower_components/angular-resource/angular-resource.js":2,"./../bower_components/angular-route/angular-route.js":3,"./../bower_components/angular-sanitize/angular-sanitize.js":4,"./../bower_components/jquery/jquery.js":20,"./controllers/main":22,"./routes":23,"angularjs":"ffc3O6"}],22:[function(require,module,exports){
 'use strict';
 
 var angular  = require('angularjs');
@@ -32007,7 +32012,7 @@ angular.module('testApp')
     ];
   }]);
 
-},{"angularjs":"2CMExG"}],23:[function(require,module,exports){
+},{"angularjs":"ffc3O6"}],23:[function(require,module,exports){
 'use strict';
 
 var angular  = require('angularjs');
@@ -32024,9 +32029,5 @@ angular.module('testApp', ['ngRoute'])
       });
   }]);
 
-},{"angularjs":"2CMExG"}],"2CMExG":[function(require,module,exports){
-require("./../../app/bower_components/angular/angular.js");
-module.exports = window.angular;
-
-},{"./../../app/bower_components/angular/angular.js":5}]},{},[21])
+},{"angularjs":"ffc3O6"}]},{},[21])
 ;
