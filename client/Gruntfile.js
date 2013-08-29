@@ -58,7 +58,7 @@ module.exports = function (grunt) {
       },
       browserify: {
         files: ['!<%= yeoman.app %>/scripts/bundle.js', '<%= yeoman.app %>/scripts/**/*.js'],
-        tasks: ['browserify']
+        tasks: ['browserify:app']
       }
     },
     connect: {
@@ -265,9 +265,9 @@ module.exports = function (grunt) {
       }
     },
     browserify: {
-      basic: {
-        src: ['<%= yeoman.app %>/scripts/app.js'],
-        dest: '<%= yeoman.app %>/scripts/bundle.js',
+      common: {
+        src: ['<%= yeoman.app %>/scripts/lib.js'],
+        dest: '<%= yeoman.app %>/scripts/common.js',
         options: {
           transform: ['debowerify'],
           shim: {
@@ -276,6 +276,14 @@ module.exports = function (grunt) {
               exports: 'angular'
             }
           }
+        }
+      },
+      app: {
+        src: ['<%= yeoman.app %>/scripts/app.js'],
+        dest: '<%= yeoman.app %>/scripts/bundle.js',
+        options: {
+          external: ['angularjs'],
+          transform: ['debowerify']
         }
       }
     },
