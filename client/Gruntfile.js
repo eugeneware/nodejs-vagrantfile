@@ -267,7 +267,7 @@ module.exports = function (grunt) {
     browserify: {
       common: {
         src: ['<%= yeoman.app %>/scripts/lib.js'],
-        dest: '<%= yeoman.app %>/scripts/common.js',
+        dest: '.tmp/common.js',
         options: {
           transform: ['debowerify'],
           shim: {
@@ -280,7 +280,7 @@ module.exports = function (grunt) {
       },
       app: {
         src: ['<%= yeoman.app %>/scripts/app.js'],
-        dest: '<%= yeoman.app %>/scripts/bundle.js',
+        dest: '.tmp/bundle.js',
         options: {
           external: ['angularjs'],
           transform: ['debowerify']
@@ -321,6 +321,7 @@ module.exports = function (grunt) {
     grunt.task.run([
       'clean:server',
       'concurrent:server',
+      'browserify',
       'connect:livereload',
       'watch'
     ]);
@@ -329,6 +330,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'clean:server',
     'concurrent:test',
+    'browserify',
     'connect:test',
     'karma:unit',
     'watch:karma'
